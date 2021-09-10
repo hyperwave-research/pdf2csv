@@ -1,4 +1,4 @@
-from pdf_bank_statement_extractor.version import __version__
+from pdf_to_csv.version import __version__
 
 
 def test_version():

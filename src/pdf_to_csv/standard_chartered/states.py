@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Any, Dict, List
 
-from pdf_bank_statement_extractor.currencies import ISO_CODE
+from pdf_to_csv.currencies import ISO_CODE
 
 MONTH_ABBR = [m for m in month_abbr]
 
