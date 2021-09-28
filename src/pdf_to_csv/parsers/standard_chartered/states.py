@@ -24,7 +24,6 @@ def is_float(s_number: str) -> bool:
     return format_float_str(s_number).replace(".", "", 1).isdigit()
 
 
-
 class State(metaclass=ABCMeta):
     @property
     @abstractmethod

@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Any
 
+
 @dataclass
 class Transaction:
     transaction_date: date
