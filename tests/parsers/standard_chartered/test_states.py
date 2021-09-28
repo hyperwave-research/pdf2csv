@@ -1,7 +1,7 @@
 from typing import List, Union
 import pytest
 from datetime import date
-from pdf_to_csv.standard_chartered.states import (
+from pdf_to_csv.parsers.standard_chartered.states import (
     StateLookAccountNumber,
     StateProcessTable,
     StateSearchCcyOrAccountNumber,
