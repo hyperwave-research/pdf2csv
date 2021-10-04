@@ -94,6 +94,8 @@ def get_account_name(row: list[str]) -> list[str]:
     semi_colon_id = row.index(":")
     return row[:semi_colon_id]
 
+def remove_white_spaces(string: str) -> str:
+    return " ".join( string.split())
 
 class StateLookAccountNumber(State):
     @property
@@ -245,7 +247,7 @@ class StateProcessTable(State):
     def get_description(self, row: list[str]) -> str:
         low_index = 2 if self.is_row_start_with_date(row) else 0
         high_index = -4
-        return " ".join(row[low_index:high_index])
+        return remove_white_spaces(" ".join(row[low_index:high_index]))
 
     def get_float_value(self, row: list[str], index: int) -> float:
         return float(format_float_str(row[index])) if is_float(row[index]) else 0
@@ -316,5 +318,5 @@ class StateProcessTable(State):
                 statements=self.statements,
             )
 
-        self._temp_row.description = f"{self._temp_row.description} {' '.join(row)}"
+        self._temp_row.description = remove_white_spaces(f"{self._temp_row.description} {' '.join(row)}")
         return self

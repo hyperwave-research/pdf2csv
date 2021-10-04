@@ -271,6 +271,39 @@ class TestStateProcessTable:
         assert isinstance(state, StateProcessTable)
         assert state._temp_row == result_row
 
+    def test_parse_row_remove_extra_white_spaces(self):
+        rows = [
+            "17 Jul BALANCE FROM PREVIOUS STATEMENT 1,000,000.99".split(" "),
+            "26 Jul TRANSFER WITHDRAWAL                 NTRF 200,000.00   1200,000.99".split(
+                " "
+            ),
+            " TRANSFER WITHDRAWAL 2                NTRF 200,000.00   1400,000.99".split(
+                " "
+            ),
+            "27 Jul TRANSFER WITHDRAWAL                 NTRF 200,000.00   1600,000.99".split(
+                " "
+            ),
+        ]
+
+        statement_date = date(2020, 8, 4)
+        account_id = "123−4−567890−1"
+        account_name = "My secret account  John Doe"
+        ccy = "USD"
+
+        state = StateProcessTable(statement_date, account_id, account_name, ccy, [])
+        for row in rows:
+            state = state(row)
+
+        assert isinstance(state, StateProcessTable)
+        assert (
+            state._statement.transactions[0].description
+            == "TRANSFER WITHDRAWAL NTRF"
+        )
+        assert (
+            state._statement.transactions[1].description
+            == "TRANSFER WITHDRAWAL 2 NTRF"
+        )
+
     def test_add_transaction_row_to_statement_when_new_transaction_row(self):
         statement_date = date(2020, 8, 4)
         account_id = "123−4−567890−1"
