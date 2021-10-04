@@ -286,7 +286,7 @@ class TestStateProcessTable:
             state = state(row)
 
         assert isinstance(state, StateProcessTable)
-        assert len(state._statement.statement_records) == 1
+        assert len(state._statement.transactions) == 1
 
     def test_no_transaction_added_on_first_row(self):
         statement_date = date(2020, 8, 4)
@@ -301,7 +301,7 @@ class TestStateProcessTable:
         for row in rows:
             state = state(row)
         assert isinstance(state, StateProcessTable)
-        assert len(state._statement.statement_records) == 0
+        assert len(state._statement.transactions) == 0
 
     def test_closing_balance_row_return_StateSearchCcyOrAccountTable(self):
         statement_date = date(2020, 8, 17)
@@ -319,7 +319,7 @@ class TestStateProcessTable:
             state = state(row)
         assert isinstance(state, StateSearchCcyOrAccountNumber)
         assert len(state.statements) == 1
-        assert len(state.statements[0].statement_records) == 1
+        assert len(state.statements[0].transactions) == 1
 
     def test_closing_balance_row_without_transactions(self):
         statement_date = date(2020, 8, 17)
@@ -336,7 +336,7 @@ class TestStateProcessTable:
             state = state(row)
         assert isinstance(state, StateSearchCcyOrAccountNumber)
         assert len(state.statements) == 1
-        assert len(state.statements[0].statement_records) == 0
+        assert len(state.statements[0].transactions) == 0
 
     def test_multi_row_transactions_description(self):
         statement_date = date(2020, 8, 17)
