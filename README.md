@@ -1,8 +1,15 @@
-# pdf_bank_statement_extractor
+# pdf2csv
 
-This project allow you to extract bank statement from the pdf you recive. This only supported a small set of bank today mainly located in Hong Kong.
+This project allow you to extract generic document that have been implemented from the pdf to a csv, like bank statement, credit card statement, bill. 
+
+## Supported pdf document
+
+- Hong Kong Standard Chartered bank statement
+
 
 ## Why this project ?
 
-Bank doesn't provide you with an easy way to get your bank statement as a pdf. I tried multiple tool that extract table from pdf, however these tools are not working on bank statement because of the way they are constructed.
+Many pdf that we have cannot be parsed to structured data easilly. I tried multiple tool that extract table from pdf, however these tools are not working on bank statement because of the way they are constructed.
+
+
 
