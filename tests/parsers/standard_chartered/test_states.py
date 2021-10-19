@@ -1,13 +1,13 @@
-from typing import List, Union
-import pytest
 from datetime import date
+from typing import List
+
+import pytest
 from pdf_to_csv.parsers.standard_chartered.states import (
     StateLookAccountNumber,
     StateProcessTable,
     StateSearchCcyOrAccountNumber,
     StateSearchTableHeader,
     StateStart,
-    Statement,
     get_statement_date,
 )
 
@@ -58,7 +58,7 @@ class TestStateLookAccountNumber:
         row = "YOUR ACCOUNT ACTIVITIES".split(" ")
         new_state = state(row)
         assert isinstance(new_state, StateLookAccountNumber)
-        assert new_state.found_account_number == False
+        assert not new_state.found_account_number
 
     def test_find_account_row(self):
         state = StateLookAccountNumber(date.today(), [])
@@ -66,10 +66,10 @@ class TestStateLookAccountNumber:
         row = f"My secret account  : {account_id}".split(" ")
         new_state = state(row)
         assert isinstance(new_state, StateLookAccountNumber)
-        assert new_state.found_account_number == True
+        assert new_state.found_account_number
         assert new_state.account_id == account_id
         assert new_state.account_name_list == ["My", "secret", "account", ""]
-        assert new_state.found_account_number == True
+        assert new_state.found_account_number
 
     def test_find_second_account_row_return_StateSearchTableHeader(self):
         statement_date = date(2020, 7, 14)
@@ -161,7 +161,7 @@ class TestStateSearchCcyOrAccountNumber:
         new_state = state(row)
         assert isinstance(new_state, StateLookAccountNumber)
         assert new_state.account_id == account_id
-        assert new_state.found_account_number == True
+        assert new_state.found_account_number
 
 
 class TestStateProcessTable:
@@ -187,7 +187,7 @@ class TestStateProcessTable:
         assert new_state is state
         assert isinstance(new_state, StateProcessTable)
         assert new_state._current_row_date == date(2020, 7, 17)
-        assert new_state._first_row == False
+        assert not new_state._first_row
 
     @pytest.mark.parametrize(
         "statement_date,row,expected_date",
@@ -274,13 +274,13 @@ class TestStateProcessTable:
     def test_parse_row_remove_extra_white_spaces(self):
         rows = [
             "17 Jul BALANCE FROM PREVIOUS STATEMENT 1,000,000.99".split(" "),
-            "26 Jul TRANSFER WITHDRAWAL                 NTRF 200,000.00   1200,000.99".split(
+            "26 Jul TRANSFER WITHDRAWAL                 NTRF 200,000.00   1200,000.99".split(  # noqa: E501
                 " "
             ),
             " TRANSFER WITHDRAWAL 2                NTRF 200,000.00   1400,000.99".split(
                 " "
             ),
-            "27 Jul TRANSFER WITHDRAWAL                 NTRF 200,000.00   1600,000.99".split(
+            "27 Jul TRANSFER WITHDRAWAL                 NTRF 200,000.00   1600,000.99".split(  # noqa: E501
                 " "
             ),
         ]
@@ -296,12 +296,10 @@ class TestStateProcessTable:
 
         assert isinstance(state, StateProcessTable)
         assert (
-            state._statement.transactions[0].description
-            == "TRANSFER WITHDRAWAL NTRF"
+            state._statement.transactions[0].description == "TRANSFER WITHDRAWAL NTRF"
         )
         assert (
-            state._statement.transactions[1].description
-            == "TRANSFER WITHDRAWAL 2 NTRF"
+            state._statement.transactions[1].description == "TRANSFER WITHDRAWAL 2 NTRF"
         )
 
     def test_add_transaction_row_to_statement_when_new_transaction_row(self):

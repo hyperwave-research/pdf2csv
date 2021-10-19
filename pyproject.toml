@@ -13,6 +13,7 @@ python = "^3.9"
 pdfplumber = "^0.5"
 typer = "^0.4.0"
 prettytable = "^2.2.1"
+dataclass-csv = "^1.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -20,6 +21,7 @@ pytest-cov = "^2.12.1"
 black = "^21.8b0"
 pytest-sugar = "^0.9.4"
 pytest-mock = "^3.6.1"
+pyproject-flake8 = "^0.0.1a2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -48,3 +50,7 @@ exclude = '''
                      # the root of the project
 )
 '''
+
+[tool.flake8]
+max-line-length = 88
+max-complexity = 10

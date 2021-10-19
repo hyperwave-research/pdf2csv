@@ -51,6 +51,6 @@ def format_table(transactions: list[Transaction]) -> str:
         fields=[
             f_name
             for f_name in table.field_names
-            if not f_name in ["account_name", "account_id", "statement_date"]
+            if f_name not in ["account_name", "account_id", "statement_date"]
         ]
     )

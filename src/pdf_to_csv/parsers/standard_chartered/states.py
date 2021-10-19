@@ -83,7 +83,7 @@ class StateStart(State):
 
 def is_account_number(row: list[str]) -> bool:
     account_number_regex = re.compile(r"^\d{3}−\d−\d{6}−\d")
-    return account_number_regex.match(row[-1]) != None
+    return account_number_regex.match(row[-1]) is not None
 
 
 def get_account_id(row: list[str]) -> str:
@@ -94,8 +94,10 @@ def get_account_name(row: list[str]) -> list[str]:
     semi_colon_id = row.index(":")
     return row[:semi_colon_id]
 
+
 def remove_white_spaces(string: str) -> str:
-    return " ".join( string.split())
+    return " ".join(string.split())
+
 
 class StateLookAccountNumber(State):
     @property
@@ -276,7 +278,7 @@ class StateProcessTable(State):
                 raise AttributeError(f"Expected open Balance Row. got {row}")
 
         if self.is_transaction_row(row):
-            if self._temp_row != None:
+            if self._temp_row is not None:
                 self._statement.add_transaction_row(
                     transaction_date=self._temp_row.transaction_date,
                     description=self._temp_row.description,
@@ -300,7 +302,7 @@ class StateProcessTable(State):
             return self
 
         if self._is_closing_balance_row(row):
-            if self._temp_row != None:
+            if self._temp_row is not None:
                 self._statement.add_transaction_row(
                     transaction_date=self._temp_row.transaction_date,
                     description=self._temp_row.description,
@@ -318,5 +320,7 @@ class StateProcessTable(State):
                 statements=self.statements,
             )
 
-        self._temp_row.description = remove_white_spaces(f"{self._temp_row.description} {' '.join(row)}")
+        self._temp_row.description = remove_white_spaces(
+            f"{self._temp_row.description} {' '.join(row)}"
+        )
         return self
