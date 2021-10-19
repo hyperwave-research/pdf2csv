@@ -5,8 +5,8 @@ from calendar import month_abbr
 from dataclasses import dataclass
 from datetime import date, datetime
 
-from pdf_to_csv.currencies import ISO_CODE
-from pdf_to_csv.model import Statement
+from pdf2csv.currencies import ISO_CODE
+from pdf2csv.model import Statement
 
 MONTH_ABBR = [m for m in month_abbr]
 

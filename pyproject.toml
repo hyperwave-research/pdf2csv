@@ -6,7 +6,7 @@ authors = ["David Zucker <davzucky@hotmail.com>"]
 license = "MIT"
 
 [tool.poetry.scripts]
-pdf_to_csv = "pdf_to_csv.console.application:app"
+pdf2csv = "pdf_to_csv.console.application:app"
 
 [tool.poetry.dependencies]
 python = "^3.9"

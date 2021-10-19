@@ -2,7 +2,7 @@ from datetime import date
 from typing import List
 
 import pytest
-from pdf_to_csv.parsers.standard_chartered.states import (
+from pdf2csv.parsers.standard_chartered.states import (
     StateLookAccountNumber,
     StateProcessTable,
     StateSearchCcyOrAccountNumber,
